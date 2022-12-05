@@ -1,121 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { LEVELS } from "../../models/levels.enum";
-import { Task } from "../../models/task.class";
-import TaskComponent from "../pure/forms/task";
-import TaskForm from "../pure/forms/taskForm";
+import React, { useState } from "react";
 
-const TaskListComponent = () => {
+const Jokes = () => {
+//   const [index, setIndex] = useState(0);
+//   let min = 1;
+//   let max = 410;
+//   setIndex(random(min, max));
+const [showJoke, setShowJoke] = useState(false)
+  const jokeList = [
+    {
+      id: 389,
+      type: "general",
+      setup: "What do you call a bee that can't make up its mind?",
+      punchline: "A maybe.",
+    },
+    {
+      id: 390,
+      type: "general",
+      setup: "Why was Cinderalla thrown out of the football team?",
+      punchline: "Because she ran away from the ball.",
+    },
+  ];
+//   function random(min, max) {
+//     return Math.floor(Math.random() * (max - min + 1) + min);
+//   }
+  console.log(jokeList,showJoke);
+  // function makeGetRequest(path) {
+  //     axios.get(path).then(
+  //         (response) => {
+  //             var result = response.data;
+  //             console.log(result);
+  //         },
+  //         (error) => {
+  //             console.log(error);
+  //         }
+  //     );
+  // }
+  // makeGetRequest('https://github.com/15Dkatz/official_joke_api/blob/master/jokes/index.json');
 
-  const defaultTask1 = new Task('Example1', 'Description1', true, LEVELS.NORMAL);
-  const defaultTask2 = new Task('Example2', 'Description 2', false, LEVELS.URGENT);
-  const defaultTask3 = new Task('Example3', 'Description 3', false, LEVELS.BLOCKING);
-
-
-  // Estado del componente
-  const [tasks, setTasks] = useState([defaultTask1, defaultTask2, defaultTask3]);
-  const [loading, setLoading] = useState(true);
-
-  // Control del ciclo de vida del componente
-  useEffect(() => {
-      console.log('Task State has been modified');
-      setTimeout(() => {
-          setLoading(false);
-      }, 2000);
-      return () => {
-          console.log('TaskList component is going to unmount...')
-      }
-  }, [tasks])
-
-
-  function completeTask(task){
-      const index = tasks.indexOf(task);
-      const tempTasks = [...tasks];
-      tempTasks[index].completed = !tempTasks[index].completed;
-      setTasks(tempTasks);
+  function onVisible(){
+     setShowJoke(!showJoke)
   }
-
-  function deleteTask(task){
-      const index = tasks.indexOf(task);
-      const tempTasks = [...tasks];
-      tempTasks.splice(index,1);
-      setTasks(tempTasks);
-  }
-
-  function addTask(task){
-      const tempTasks = [...tasks];
-      tempTasks.push(task);
-      setTasks(tempTasks);
-  }
-
-  const Table = () => {
-      return (
-          <table>
-              <thead>
-                  <tr>
-                      <th scope='col'>Title</th>
-                      <th scope='col'>Description</th>
-                      <th scope='col'>Priority</th>
-                      <th scope='col'>Actions</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  { tasks.map((task, index) => {
-                      return (
-                              <TaskComponent 
-                                  key={index} 
-                                  task={task}
-                                  complete={completeTask}
-                                  remove = {deleteTask}
-                              >
-                              </TaskComponent>
-                          )
-                      }
-                  )}
-              </tbody>
-          </table>
-      )
-  }
-
-  let tasksTable;
-
-  if(tasks.length > 0){
-      tasksTable = <Table></Table>
-  }else{
-      tasksTable = (
-      <div style={{color: 'black'}}>
-          <h3> There are no tasks to show</h3>
-          <h4>Please, create one</h4>
-      </div>
-      )
-  }
-
-  const loadingStyle = {
-      color: 'grey',
-      fontSize: '30px',
-      fontWeight: 'bold'
-  }
+const show = {
+    visibility:'visible'
+}
+const hide ={
+    visibility:'hidden'
+}
 
   return (
-      <div>
-          <div className='col-12'>
-              <div className='card'>
-                  {/* Card Header (title) */}
-                  <div className='card-header p-3'>
-                      <h5 style={{color: 'black'}}>
-                          Your Tasks:
-                      </h5>
-                  </div>
-                  {/* Card Body (content) */}
-                  <div className='card-body' data-mdb-perfect-scrollbar='true' style={ {position: 'relative', height: '400px'} }>
-                      {/* TODO: Add Loading Spinner */}
-                      {loading ? (<p style={loadingStyle}>Loading tasks...</p>) : tasksTable}
-                  </div>
-              </div>
-          </div>
-          <TaskForm add={addTask} length={tasks.length}></TaskForm>
-      </div>
+    <div>
+      <h2>{jokeList[0].id}</h2>
+      <h3>{jokeList[0].type}</h3>
+      <h4 onClick={onVisible}>{jokeList[0].setup}</h4>
+      <h4 style={showJoke ? show : hide }>{jokeList[0].punchline}</h4>
+    </div>
   );
 };
 
-
-export default TaskListComponent;
+export default Jokes;

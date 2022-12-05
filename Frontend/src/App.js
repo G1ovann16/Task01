@@ -1,15 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import TaskListComponent from './components/containers/task_list';
-import Loginform from './components/pure/forms/loginForm';
-import RegisterForm from './components/pure/forms/registerForm';
+import Jokes from './components/containers/jokes';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <TaskListComponent></TaskListComponent>
-        {/* <RegisterForm></RegisterForm> */}
+       <Jokes></Jokes>
       </header>
     </div>
   );
